@@ -1,11 +1,23 @@
-import { Menu, UnstyledButton, Avatar, Text } from '@mantine/core';
-import { IconLogout, IconChevronDown } from '@tabler/icons';
+import { Menu, UnstyledButton, Avatar, Text } from "@mantine/core";
+import { IconLogout, IconChevronDown } from "@tabler/icons";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
+import { logout } from "../services/auth.service";
 
-const user = {
-  displayName: 'Jessica Page',
-};
+// const user = {
+//   displayName: 'Jessica Page',
+// };
 
 export default function AccountMenu() {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
+
   // const user = useUser();
   // const logout = useLogout();
 
@@ -18,19 +30,20 @@ export default function AccountMenu() {
               <Avatar
                 color="blue"
                 variant="filled"
-                // src={user?.photoUrl}
+                src={user?.photoURL}
                 radius="xl"
               >
-                {/* {getInitials(`${user?.firstName} ${user?.lastName}`)} */}
-                JP
+                {user?.displayName.charAt(0)}
               </Avatar>
-              <Text className="font-semibold text-sm">{user.displayName}</Text>
+              <Text className="font-semibold text-sm">{user?.displayName}</Text>
               <IconChevronDown size={16} />
             </div>
           </UnstyledButton>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Item icon={<IconLogout size={16} />}>Logout</Menu.Item>
+          <Menu.Item icon={<IconLogout size={16} />} onClick={handleLogout}>
+            Logout
+          </Menu.Item>
         </Menu.Dropdown>
       </Menu>
     </div>

@@ -1,14 +1,14 @@
 import { Container, Paper, Title, Text, Anchor, Button } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
 import AppContainer from "../components/AppContainer";
-import { loginWithGoogle } from "../services/auth.service";
+import { signUpWithGoogle } from "../services/auth.service";
 
-export default function LoginPage() {
+export default function SingupPage() {
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    const user = await loginWithGoogle();
-    console.log("login: ", user);
+  const handleSignup = async () => {
+    const user = await signUpWithGoogle();
+    console.log(user);
     navigate("/");
   };
 
@@ -19,25 +19,25 @@ export default function LoginPage() {
           PopLink
         </Title>
         <Paper withBorder shadow="sm" p={30} mt={30} radius="md">
-          <Title align="center">Welcome back!</Title>
+          <Title align="center">Create Account</Title>
           <Text color="dimmed" size="lg" align="center" mt={5}>
-            Don't have an account yet?{" "}
+            Already have an account?{" "}
             <Anchor
               component={Link}
-              to="/signup"
+              to="/login"
               className="font-medium !no-underline"
             >
-              Sign up
+              Login
             </Anchor>
           </Text>
           <Button
-            onClick={handleLogin}
+            onClick={handleSignup}
             fullWidth
             mt="xl"
             variant="default"
             size="lg"
           >
-            Login with Google
+            Sign up with Google
           </Button>
         </Paper>
       </Container>
